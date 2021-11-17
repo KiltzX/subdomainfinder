@@ -2,7 +2,14 @@
 echo "Input domain name"
 read domain
 
-./subfinder -d $domain -o domain.txt
+
+arc=$(uname -m)
+if [[ $arc == *"x86_64"* ]]; then
+  ./binaries/subfinder-elf -d $domain -o domain.txt
+else
+  ./binaries/subfinder-arm64 -d $domain -o domain.txt
+fi
+
 
 input="domain.txt"
 while IFS= read -r line
